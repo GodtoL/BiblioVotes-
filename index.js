@@ -1,6 +1,8 @@
+const sequelize = require('./config/database');
+
 express = require('express')
 require('dotenv').config();
-
+sequelize
 app = express()
 app.use(express.json())
 
