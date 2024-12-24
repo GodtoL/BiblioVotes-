@@ -1,11 +1,17 @@
 const sequelize = require('../config/database');
 const Book = require('./book');
 const Tag = require('./Tag');
+const User = require('./User')
+const Comment = require('./Comment')
 
 // Relación muchos a muchos
 const BookTag = sequelize.define('BookTag', {});
 Book.belongsToMany(Tag, { through: BookTag });
 Tag.belongsToMany(Book, { through: BookTag });
+
+const UserComment = sequelize.define("UserComment", {});
+User.belongsToMany(Comment, { through : UserComment});
+Comment.belongsToMany(User, { through : UserComment});
 
 async function syncDatabase() {
     try {

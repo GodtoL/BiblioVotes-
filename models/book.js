@@ -1,11 +1,14 @@
 const sequelize = require("../config/database");
 const {DataTypes} = require('sequelize')
-const Tag = require("./Tag.js")
 
 const Book = sequelize.define('Book', {
     title : {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    author : {
+        type : DataTypes.STRING,
+        defaultValue : "Anònimo"
     },
     description : {
         type: DataTypes.STRING,
@@ -14,6 +17,7 @@ const Book = sequelize.define('Book', {
 
     votes_count : {
         type: DataTypes.INTEGER,
+        defaultValue : 0
     }
 })
 
