@@ -1,12 +1,14 @@
 express = require('express')
+require('dotenv').config();
 
 app = express()
+app.use(express.json())
 
 app.get("/", async(req,res) => {
     res.send("hOLA");
 })
 
-port = 3001;
-app.listen(port, () => {
-    console.log("Servidor corriendo en puerto", port);  
+
+app.listen(process.env.PORT, () => {
+    console.log("Servidor corriendo...");  
 })
