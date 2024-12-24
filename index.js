@@ -1,5 +1,5 @@
 const sequelize = require('./config/database');
-
+const { Book, Tag } = require('./models');
 express = require('express')
 require('dotenv').config();
 sequelize
