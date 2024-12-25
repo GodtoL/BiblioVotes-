@@ -15,7 +15,7 @@ Comment.belongsToMany(User, { through : UserComment});
 
 async function syncDatabase() {
     try {
-        await sequelize.sync({ force: false }); // Cambia a `true` para recrear tablas
+        await sequelize.sync({alter : true}, { force: false }); // Cambia a `true` para recrear tablas
         console.log('Tablas sincronizadas correctamente.');
     } catch (error) {
         console.error('Error al sincronizar las tablas:', error);
@@ -23,4 +23,4 @@ async function syncDatabase() {
 }
 
 syncDatabase();
-module.exports = { Book, Tag, BookTag };
+module.exports = { User, Book, Tag, BookTag };

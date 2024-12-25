@@ -6,9 +6,9 @@ const Comment = sequelize.define("Comment", {
         type : DataTypes.STRING,
         allowNull : false
     },
-    created_at : {
-        type : DataTypes.DATE,
-        defaultValue : sequelize.NOW,
+    count_votes : {
+        type : DataTypes.INTEGER,
+        defaultValue : 0
     }
 })
 
