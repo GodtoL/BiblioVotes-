@@ -4,8 +4,8 @@ const UserController = require('../controllers/UserController.js');
 
 router.post('/', UserController.insert)
 
-// router.route("/:id")
-//     .get(topicController.getDetail)
+router.route("/:id")
+    .get(UserController.getUser)
 //     .put(topicController.update)
 //     .delete(topicController.delete)
 //     .patch(topicController.voteCount)
