@@ -23,7 +23,7 @@ const getUser = async (req, res) => {
         where : {id:req.params.id}
     })
     if (!user){
-        res.status(404).json({message : "No se encontro al usuario con id ", id})
+        return res.status(404).json({message : `No se encontró al usuario con id ${req.params.id}`})
     }
     res.status(200).json(user)
 
