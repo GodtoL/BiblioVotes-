@@ -13,4 +13,14 @@ const insertTag = async(req, res) => {
     }
 }
 
-module.exports = {insertTag};
+const getAllTags = async(req, res) => {
+    try{
+        const tags = await Tag.findAll();
+        res.status(200).json(tags)
+    }catch(error){
+        res.status(500).json({message : "Error al traer los tags"})
+        console.log("Error al traer los tags ", error)
+    }
+} 
+
+module.exports = {insertTag, getAllTags};
