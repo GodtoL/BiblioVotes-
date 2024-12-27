@@ -70,6 +70,7 @@ const insertBook = async(req, res) => {
             description : req.body.description,
             votesCount : req.body.votesCount || 0
         })
+
         if (req.body.tags) {
             console.log("Tags en el request (antes de normalizar):", req.body.tags);
         
@@ -85,16 +86,14 @@ const insertBook = async(req, res) => {
                     where: { id: req.body.tags }
                 });
                 
-
                 if (tagsInstances.length > 0) {
                     await Promise.all(tagsInstances.map(tag => newBook.addTag(tag)));
                 } else {
                     console.log("No se encontraron etiquetas para los IDs proporcionados.");
-                    return res.status(400).json({ message: "No se encontraron etiquetas con los IDs proporcionados." });
+                    return res.status(400).json({ message : "No se encontraron etiquetas con los IDs proporcionados." });
                 }
             }
         }
-        
         
         res.status(201).json({message : "Se crea exitosamente el libro ", newBook})
 
