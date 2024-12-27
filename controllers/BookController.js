@@ -11,6 +11,19 @@ const getAllBooks = async(req, res) => {
     }
 }
 
+const getPopularBooks = async(req, res) => {
+    try{
+        const popularBooks = await Book.findAll({
+            order : [['votes_count', 'DESC']],
+            limit : 5
+        })
+        res.status(200).json(popularBooks)
+    } catch(error){
+        res.status(500).json({message : "Error al consultar la base de datos"})
+        console.log("Error al obtener los libros populares ", error)
+    }
+}
+
 const insertBook = async(req, res) => {
     try{
         const newBook = await Book.create({
@@ -31,8 +44,7 @@ const insertBook = async(req, res) => {
         
             if (req.body.tags.length > 0) {
                 const tagsInstances = await Tag.findAll({
-                    where: { id: req.body.tags },
-                    logging: console.log, // Para depurar la consulta SQL
+                    where: { id: req.body.tags }
                 });
                 
                 console.log("Tags encontrados:", tagsInstances);
@@ -58,11 +70,15 @@ const insertBook = async(req, res) => {
 
 const deleteBook = async(req, res) => {
     try{
-        await Book.destroy({ where : {id:req.params.id}})
+        const deletebook = await Book.destroy({ where : {id:req.params.id}})
+        if (deletebook === 0) {
+            // Se eliminó el libro exitosamente
+            res.status(404).json({message : "No se encontrò el libro"})
+        }
         res.status(200).json({message : `Se eliminò correctamente el libro con id ${req.params.id}`})
     } catch(error){
         res.status(500).json({message : "Ocurriò un error al intentar borrar"})
         console.log("Error al borrar ", error)
     }
 }
-module.exports = {insertBook, getAllBooks, deleteBook};
+module.exports = {insertBook, getAllBooks, deleteBook, getPopularBooks};
