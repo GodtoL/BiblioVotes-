@@ -6,7 +6,7 @@ const Comment = sequelize.define("Comment", {
         type : DataTypes.STRING,
         allowNull : false
     },
-    count_votes : {
+    votesCount: {
         type : DataTypes.INTEGER,
         defaultValue : 0
     }

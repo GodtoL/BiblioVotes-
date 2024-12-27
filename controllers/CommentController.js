@@ -6,7 +6,7 @@ const insertComment = async(req, res) => {
     try{
         const newComment = await Comment.create({
             content : req.body.content,
-            count_votes : 0
+            votesCount : req.body.votesCount || 0
         })
         console.log("Métodos disponibles en newBook:", Object.keys(newComment.__proto__));
         if (req.body.userId){

@@ -15,11 +15,10 @@ const Book = sequelize.define('Book', {
         allowNull: false
     },
 
-    votes_count : {
+    votesCount : {
         type: DataTypes.INTEGER,
         defaultValue : 0
     }
 })
-
 
 module.exports = Book;

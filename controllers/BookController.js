@@ -14,7 +14,7 @@ const getAllBooks = async(req, res) => {
 const getPopularBooks = async(req, res) => {
     try{
         const popularBooks = await Book.findAll({
-            order : [['votes_count', 'DESC']],
+            order : [['votesCount', 'DESC']],
             limit : 5
         })
         res.status(200).json(popularBooks)
@@ -30,7 +30,7 @@ const insertBook = async(req, res) => {
             title : req.body.title,
             author : req.body.author,
             description : req.body.description,
-            votes_count : 0
+            votesCount : req.body.votesCount || 0
         })
         if (req.body.tags) {
             console.log("Tags en el request (antes de normalizar):", req.body.tags);
