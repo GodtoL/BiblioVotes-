@@ -1,5 +1,7 @@
 const Book = require('../models/Book.js')
 const Tag = require('../models/Tag.js')
+const Comment = require('../models/Comment.js')
+const User = require('../models/User.js')
 
 const getAllBooks = async(req, res) => {
     try{
@@ -11,12 +13,48 @@ const getAllBooks = async(req, res) => {
     }
 }
 
+const getBook = async(req, res) => {
+    try{
+        const book = await Book.findByPk(req.params.id, {
+            include: [
+              {
+                model: Tag,
+                as: 'tags',
+                attributes: ['id', 'name'],
+              },
+              {
+                model: Comment,
+                as: 'comments',
+                attributes: ['id', 'content'],
+                include: [
+                  {
+                    model: User,
+                    as: 'users',
+                    attributes: ['id', 'username'],
+                  },
+                ],
+              },
+            ],
+          });
+          
+        if (!book) {
+            res.status(404).json({ message : "Libro no encontrado"})
+        }
+
+        res.status(200).json(book);
+    } catch(error) {
+        res.status(500).json({message : "Hubo un error al obtener el libro"})
+        console.log("Hubo un error al obtener el libro", error)
+    }
+}
+
 const getPopularBooks = async(req, res) => {
     try{
         const popularBooks = await Book.findAll({
             order : [['votesCount', 'DESC']],
             limit : 5
         })
+   
         res.status(200).json(popularBooks)
     } catch(error){
         res.status(500).json({message : "Error al consultar la base de datos"})
@@ -47,8 +85,6 @@ const insertBook = async(req, res) => {
                     where: { id: req.body.tags }
                 });
                 
-                console.log("Tags encontrados:", tagsInstances);
-                console.log("Métodos disponibles en newBook:", Object.keys(newBook.__proto__));
 
                 if (tagsInstances.length > 0) {
                     await Promise.all(tagsInstances.map(tag => newBook.addTag(tag)));
@@ -81,4 +117,4 @@ const deleteBook = async(req, res) => {
         console.log("Error al borrar ", error)
     }
 }
-module.exports = {insertBook, getAllBooks, deleteBook, getPopularBooks};
+module.exports = {insertBook, getBook, getAllBooks, deleteBook, getPopularBooks};

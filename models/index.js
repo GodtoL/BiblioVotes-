@@ -4,20 +4,20 @@ const Tag = require('./Tag');
 const User = require('./User')
 const Comment = require('./Comment')
 
-// Relación muchos a muchos
+// Tabla intermedia BookTag (N:M entre Book y Tag)
 const BookTag = sequelize.define('BookTag', {});
-
 Book.belongsToMany(Tag, { through: BookTag, as: 'tags' });
 Tag.belongsToMany(Book, { through: BookTag, as: 'books' });
 
+// Relación User ↔ Comment (N:M con UserComment)
+const UserComment = sequelize.define('UserComment', {});
+User.belongsToMany(Comment, { through: UserComment, as: 'comments' });
+Comment.belongsToMany(User, { through: UserComment, as: 'users' });
 
-const UserComment = sequelize.define("UserComment", {});
-User.belongsToMany(Comment, { through : UserComment});
-Comment.belongsToMany(User, { through : UserComment});
+// Relación Book ↔ Comment (1:N)
+Comment.belongsTo(Book, { as: 'book', foreignKey: 'bookId' });
+Book.hasMany(Comment, { as: 'comments', foreignKey: 'bookId' });
 
-const BookComment = sequelize.define("BookComment", {});
-Book.belongsToMany(Comment, { through : BookComment});
-Comment.belongsToMany(Book, { through : BookComment});
 
 async function syncDatabase() {
     try {
@@ -29,4 +29,4 @@ async function syncDatabase() {
 }
 
 syncDatabase();
-module.exports = { sequelize, Book, Tag, BookTag, Comment, User, UserComment, BookComment };
+module.exports = { sequelize, Book, Tag, BookTag, Comment, User, UserComment };
