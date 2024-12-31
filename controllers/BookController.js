@@ -4,14 +4,36 @@ const Comment = require('../models/Comment.js')
 const User = require('../models/User.js')
 
 const getAllBooks = async(req, res) => {
-    try{
-        const books = await Book.findAll();
-        res.status(200).json(books) 
+    try {
+        const books = await Book.findAll({
+            include: [
+                {
+                    model: Tag,
+                    as: 'tags',
+                    attributes: ['id', 'name'],
+                },
+                {
+                    model: Comment,
+                    as: 'comments',
+                    attributes: ['id', 'content'],
+                    include: [
+                        {
+                            model: User,
+                            as: 'user',
+                            attributes: ['id', 'username'],
+                        },
+                    ],
+                },
+            ],
+        });
+
+        res.status(200).json(books);
     } catch (error) {
-        res.status(500).json({message : "Hubo un error al traer los datos de libros"})
-        console.log("Hubo un error, error: ", error)
+        res.status(500).json({ message: "Hubo un error al traer los datos de libros" });
+        console.log("Hubo un error, error: ", error);
     }
 }
+
 
 const getBook = async(req, res) => {
     try{
@@ -67,6 +89,7 @@ const insertBook = async(req, res) => {
         const newBook = await Book.create({
             title : req.body.title,
             author : req.body.author,
+            shortDescription : req.body.shortDescription,
             description : req.body.description,
             votesCount : req.body.votesCount || 0
         })

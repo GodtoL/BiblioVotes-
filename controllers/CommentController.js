@@ -8,15 +8,9 @@ const insertComment = async(req, res) => {
             content : req.body.content,
             votesCount : req.body.votesCount || 0,
             bookId: req.body.bookId,
+            userId: req.body.userId
         })
-        console.log("al crearse ", newComment)  
-
-        // Agregamos el usuario que hizo el comentario
-        if (req.body.userId) {
-            const userInstance = await User.findOne( { where : {id:req.body.userId} } )
-            await newComment.addUser(userInstance);    
-        }
-
+        
         res.status(201).json( { message : "Se creo correctaemente el comentario" } )
     } catch (error) {
         res.status(500).json( { message : "No se pudo crear el comentario" } )

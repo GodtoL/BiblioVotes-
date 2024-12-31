@@ -9,10 +9,9 @@ const BookTag = sequelize.define('BookTag', {});
 Book.belongsToMany(Tag, { through: BookTag, as: 'tags' });
 Tag.belongsToMany(Book, { through: BookTag, as: 'books' });
 
-// Relación User ↔ Comment (N:M con UserComment)
-const UserComment = sequelize.define('UserComment', {});
-User.belongsToMany(Comment, { through: UserComment, as: 'comments' });
-Comment.belongsToMany(User, { through: UserComment, as: 'users' });
+// Relación User ↔ Comment (1:N)
+Comment.belongsTo(User, { as: 'user', foreignKey: 'userId' });
+User.hasMany(Comment, { as: 'comments', foreignKey: 'userId' });
 
 // Relación Book ↔ Comment (1:N)
 Comment.belongsTo(Book, { as: 'book', foreignKey: 'bookId' });
@@ -29,4 +28,4 @@ async function syncDatabase() {
 }
 
 syncDatabase();
-module.exports = { sequelize, Book, Tag, BookTag, Comment, User, UserComment };
+module.exports = { sequelize, Book, Tag, BookTag, Comment, User };
