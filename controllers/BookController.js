@@ -51,7 +51,7 @@ const getBook = async(req, res) => {
                 include: [
                   {
                     model: User,
-                    as: 'users',
+                    as: 'user',
                     attributes: ['id', 'username'],
                   },
                 ],
