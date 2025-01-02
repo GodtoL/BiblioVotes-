@@ -139,4 +139,26 @@ const deleteBook = async(req, res) => {
         console.log("Error al borrar ", error)
     }
 }
-module.exports = {insertBook, getBook, getAllBooks, deleteBook, getPopularBooks};
+
+const updateVote = async(req, res) => {
+    try {
+        const id = req.params.id;
+        const book = await Book.findOne({
+            where : {id:id}
+        })
+        if(book){
+            const updateBook = await Book.update(
+                { votesCount: book.votesCount + 1}, 
+                { where: { id: id } } 
+            )
+            res.status(200).json({ message: 'Libro votado exitosamente' });
+        }else {
+            res.status(404).json({ message: 'No se encontró el libro', id });
+        }
+
+    } catch(error) {
+        res.status(500).json({message : "No se pudo actualizar el voto"})
+        console.log("Error al votar ", error)
+    }
+}
+module.exports = {insertBook, getBook, getAllBooks, deleteBook, getPopularBooks, updateVote};

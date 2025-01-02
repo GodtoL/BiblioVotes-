@@ -8,5 +8,5 @@ router.post("/", BookController.insertBook);
 router.route("/:id")
     .delete(BookController.deleteBook)
     .get(BookController.getBook)
-
+    .put(BookController.updateVote)
 module.exports = router;
