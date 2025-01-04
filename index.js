@@ -9,7 +9,7 @@ app = express()
 app.use(express.json()); 
 require('dotenv').config()
 app.use(cors());
-app.use(cors({ origin: 'http://127.0.0.1:5500' }));;
+app.use(cors({ origin: ['http://127.0.0.1:5500', 'http://localhost:5173'] }));;
 app.use(express.json())
 
 app.use("/api/user", userRoute)
