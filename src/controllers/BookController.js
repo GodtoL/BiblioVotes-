@@ -93,6 +93,8 @@ const insertBook = async(req, res) => {
             description : req.body.description,
             votesCount : req.body.votesCount || 0
         })
+        console.log("lo que hay en Object.getOwnPropertyNames(Book.prototype) ",Object.getOwnPropertyNames(Book.prototype));
+
 
         if (req.body.tags) {
             console.log("Tags en el request (antes de normalizar):", req.body.tags);
@@ -110,7 +112,7 @@ const insertBook = async(req, res) => {
                 });
                 
                 if (tagsInstances.length > 0) {
-                    await Promise.all(tagsInstances.map(tag => newBook.addTags(tag)));
+                    await Promise.all(tagsInstances.map(tag => newBook.addTag(tag)));
                 } else {
                     console.log("No se encontraron etiquetas para los IDs proporcionados.");
                     return res.status(400).json({ message : "No se encontraron etiquetas con los IDs proporcionados." });

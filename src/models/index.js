@@ -20,7 +20,7 @@ Book.hasMany(Comment, { as: 'comments', foreignKey: 'bookId' });
 
 async function syncDatabase() {
     try {
-        await sequelize.sync({alter : true}); // Cambia a `true` para recrear tablas
+        await sequelize.sync({ force: true }); 
         console.log('Tablas sincronizadas correctamente.');
     } catch (error) {
         console.error('Error al sincronizar las tablas:', error);
