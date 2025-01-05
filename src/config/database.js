@@ -5,7 +5,10 @@ const databaseUrl = process.env.DATABASE_URL;
 
 // Configuración de Sequelize para conectarse usando la URL
 const sequelize = new Sequelize(databaseUrl, {
-  dialect: 'postgres', 
+  dialect: 'postgres',
+  ssl: {
+    rejectUnauthorized: false
+  }
 });
 
 module.exports = sequelize;
