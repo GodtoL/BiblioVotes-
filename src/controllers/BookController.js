@@ -110,7 +110,7 @@ const insertBook = async(req, res) => {
                 });
                 
                 if (tagsInstances.length > 0) {
-                    await Promise.all(tagsInstances.map(tag => newBook.addTag(tag)));
+                    await Promise.all(tagsInstances.map(tag => newBook.addTags(tag)));
                 } else {
                     console.log("No se encontraron etiquetas para los IDs proporcionados.");
                     return res.status(400).json({ message : "No se encontraron etiquetas con los IDs proporcionados." });
