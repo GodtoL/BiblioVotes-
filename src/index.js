@@ -4,7 +4,7 @@ const tagRoute = require('./routes/TagRoute.js')
 const cors = require('cors');
 const commentRoute = require('./routes/CommentRoute.js')
 const express = require('express');
-const { sequelize, Book, Tag, BookTag } = require('./models'); 
+const { sequelize, Book, Tag, BookTag } = require('./models/index.js'); 
 app = express()
 app.use(express.json()); 
 require('dotenv').config()
