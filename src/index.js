@@ -8,15 +8,16 @@ const { sequelize, Book, Tag, BookTag } = require('./models/index.js');
 app = express()
 app.use(express.json()); 
 require('dotenv').config()
-app.use(cors());
-app.use(cors({ origin: ['http://127.0.0.1:5500', 'http://localhost:5173'] }));;
-app.use(express.json())
+const allowedOrigins = [ 'http://127.0.0.1:5500', 'http://localhost:5173'];
+app.use(cors({ origin: allowedOrigins }));
+
 
 app.use("/api/user", userRoute)
 app.use("/api/book", bookRoute)
 app.use("/api/tag", tagRoute)
 app.use("/api/comment", commentRoute)
 
-app.listen(process.env.PORT, () => {
-    console.log("Servidor corriendo...");  
-})
+const port = process.env.PORT || 3000; 
+app.listen(port, () => {
+    console.log(`Servidor corriendo en el puerto ${port}...`);
+});
