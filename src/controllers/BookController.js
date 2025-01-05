@@ -60,7 +60,7 @@ const getBook = async(req, res) => {
           });
           
         if (!book) {
-            res.status(404).json({ message : "Libro no encontrado"})
+            res.status(404).json( { message : "Libro no encontrado"} )
         }
 
         res.status(200).json(book);
