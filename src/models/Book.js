@@ -11,11 +11,11 @@ const Book = sequelize.define('Book', {
         defaultValue : "Anònimo"
     },
     shortDescription :{
-        type : DataTypes.STRING(100),
+        type : DataTypes.STRING(500),
         allowNull: false
     },
     description : {
-        type: DataTypes.STRING(500),
+        type: DataTypes.STRING(2000),
         allowNull: false
     },
 
